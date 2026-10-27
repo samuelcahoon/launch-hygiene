@@ -83,7 +83,7 @@ Setup takes about 15 minutes. Start with tonight's change: one approved line and
 
 - "Set up launch hygiene for our launch. The tagline is now X. It used to be Y."
 - "We renamed X to Y. Drift check everything."
-- "Drift check https://yoursite.com and our Notion launch page."
+- "Drift check `https://yoursite.com` and our Notion launch page."
 - "Queue this for the founder page." Then later: "Push."
 - "Put this in the outbox."
 - "Are we safe to ship?"

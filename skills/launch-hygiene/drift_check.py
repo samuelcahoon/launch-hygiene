@@ -21,6 +21,7 @@ Matching ignores capital letters, curly vs straight quotes and extra spaces.
 Web pages are checked for what people and machines read: visible text, alt text,
 titles, meta and Open Graph descriptions, and JSON-LD.
 Exit code: 0 when safe to ship, 1 when anything is stale or close, 2 when it couldn't check.
+On GitHub Actions, the report also goes to the run's summary (see templates/github/).
 """
 import datetime, difflib, html, json, os, re, sys, unicodedata, urllib.request
 
@@ -204,7 +205,7 @@ def main():
         sys.exit(2)
     stale = sorted(res['stale'], key=lambda h: not h['ai'])
     ver = f" v{canon['version']}" if canon.get('version') else ''
-    L = ['# Drift check', '', ('Canon' + ver + '. ' if ver else '') + f'Checked {n} {"file or page" if n == 1 else "files or pages"} against {len(canon.get("retired", []))} retired phrases and '
+    L = ['# Drift check', '', ('Canon' + ver + '. ' if ver else '') + f'Checked {n} {"file or page" if n == 1 else "files or pages"} against {len([r for r in canon.get("retired", []) if '[' not in r.get('find', '')])} retired phrases and '
          f'{len([1 for v in canon.get("approved", {}).values() if atext(v) and "[" not in atext(v)])} approved lines.', '']
     if stale:
         L += [f'## Stale ({len(stale)}): fix or queue', '',
@@ -235,6 +236,10 @@ def main():
         with open(out_path, 'w', encoding='utf-8') as fh:
             fh.write(report)
     print(report)
+    summary = os.environ.get('GITHUB_STEP_SUMMARY')
+    if summary:  # On GitHub, show the report on the pull request's checks page.
+        with open(summary, 'a', encoding='utf-8') as fh:
+            fh.write(report)
     sys.exit(0 if not stale and not res['close'] else 1)
 
 if __name__ == '__main__':

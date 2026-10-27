@@ -1,0 +1,27 @@
+# Tests this skill on every push: the drift check has to flag all 29 planted
+# stale phrases in both synthetic launch weeks, with no false alarms.
+name: Test the drift check
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Script benchmark, both synthetic companies
+        run: |
+          for seed in 1121 7788; do
+            out=$(python3 eval/script_benchmark.py $seed skills/launch-hygiene/drift_check.py)
+            echo "$out" | tee -a "$GITHUB_STEP_SUMMARY"
+            echo "$out" | grep -q "flagged 29 of 29" || exit 1
+            echo "$out" | grep -q "False alarms on traps: 0" || exit 1
+          done

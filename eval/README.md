@@ -27,6 +27,7 @@ Two companies so far: seed `1121` is Northlight AI (prior auth and denials) and 
 | --- | --- | --- | --- | --- | --- |
 | [1](results/2026-10-26_run1_northlight_v1.md) | v1 | Northlight AI | 14.5 of 15 | One slip: edited an old changelog line | Right ("Not yet") |
 | [2](results/2026-10-26_run2_harborline_v2.md) | v2 | Harborline | 15 of 15 | Clean | Right ("Not yet") |
+| [3](results/2026-10-26_run3_northlight_v2.1.md) | v2.1 (adds GitHub team mode) | Northlight AI | 15 of 15 | Clean | Right ("Not yet") |
 
 Run 1's score needs an asterisk: four of its finds came from the session checking by hand after the script missed them. v2's script catches those itself. [Script-only numbers](results/script_benchmark.md): v1 flagged 24 of 29 planted stale phrases, v2 flags 29 of 29 with no false alarms, on both companies.
 
@@ -49,7 +50,7 @@ python3 eval/script_benchmark.py 7788 skills/launch-hygiene/drift_check.py
 
 ## Limits
 
-- Two synthetic companies and one run each. Model runs vary, so treat a single score as a sample, not a guarantee.
+- Two synthetic companies and three runs. Model runs vary, so treat a single score as a sample, not a guarantee.
 - I wrote the plants. The reviewers' own test files and the second company are the checks on that.
 - Notion is a folder of markdown files here. The real skill reads Notion through the connector.
 - The grader is text checks plus a human read, and the human is me. The evidence is in each results file so you can disagree with a grade.

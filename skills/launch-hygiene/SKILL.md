@@ -1,6 +1,6 @@
 ---
 name: launch-hygiene
-description: Keeps launch messaging the same everywhere when you're the only PMM. Runs a drift check across files, live pages and Notion, queues edits to pages other people own, and keeps the current version of every unsent message. Use after any messaging decision, before anything goes out, or when the user says "drift check," "queue this," "push," "outbox" or "are we safe to ship?" Built for Claude plus Notion.
+description: Keeps launch messaging the same everywhere when you're the only PMM, or when a whole company needs one answer. Runs a drift check across files, live pages, Notion and GitHub, queues edits to pages other people own, and keeps the current version of every unsent message. Use after any messaging decision, before anything goes out, or when the user says "drift check," "queue this," "push," "outbox" or "are we safe to ship?" Built for Claude plus Notion or GitHub.
 ---
 
 # Launch hygiene
@@ -9,12 +9,21 @@ For the solo PMM, or the tiny team, whose launch messaging lives in too many pla
 
 ## The three pieces
 
-1. **The canon.** Every approved line word for word, every retired phrase with what to use instead, the claims you're allowed to make, and every place the messaging lives with its owner.
-   - On Claude web or desktop, the canon lives in Notion: a page made from `templates/canon-page.md`, with the canon as one JSON code block. Read it at the start of every chat and save it back after every change, because a chat's files don't carry over.
-   - In Claude Code, it can be `canon.json` in the repo.
-   - Same fields either way. `canon.example.json` shows them.
+1. **The canon.** Every approved line word for word, every retired phrase with what to use instead, the claims you're allowed to make, and every place the messaging lives with its owner. `canon.example.json` shows the fields. Where it lives depends on who needs it (next section).
 2. **The push queue** (a Notion page from `templates/push-queue.md`). Edits to pages someone else owns wait here with the exact text now and the exact text it becomes. Nothing on those pages changes until the user says "push."
 3. **The outbox** (a Notion page from `templates/outbox.md`). The current version of every message waiting to go out. It wins over any saved draft in Slack or email.
+
+## Where the canon lives
+
+- **Just you, or founders who live in Notion:** a Notion page made from `templates/canon-page.md`, with the canon as one JSON code block. Read it at the start of every chat and save it back after every change, because a chat's files don't carry over.
+- **A team, or a company that needs one answer:** a private GitHub repo. Put `canon.json` there with the files it depends on (positioning, voice, objections) and the AI instructions and skills that write copy. Everyone's AI tool reads the same files, so one merged change reaches every teammate's Claude. Setup is in `templates/github/`.
+  - Every canon change is a pull request. The description says who decided and why, so the history doubles as the decisions log.
+  - `CODEOWNERS` asks the person in `decides` to approve changes to the files they own.
+  - The drift check runs on every pull request and fails it if a retired line is still in the copy.
+  - If a change goes wrong, revert the pull request. That's the way back to yesterday.
+  - The files are plain text, so they work with whatever AI tool the team uses next.
+  - Keep a Notion copy for people who never open GitHub. After each merge, update the Notion canon page to match. The repo is the source of truth and the Notion page is a copy.
+- **Claude Code, working in one repo:** `canon.json` in that repo.
 
 ## Ground rules
 
@@ -23,6 +32,7 @@ For the solo PMM, or the tiny team, whose launch messaging lives in too many pla
 - **Don't rewrite history.** Never edit a sent email or Slack message, a quote from a real person, an old changelog line, a published press release or legal text. You can add a new dated line to a changelog. Flag the rest and let the user decide.
 - **Don't game the check.** Never add `ok_if`, `ok_close` or a skip rule yourself to reach 0. Suggest it and wait for a yes.
 - **Never send anything.** The user sends.
+- **On GitHub, open a pull request, never push to main.** Don't approve or merge a change to a line someone else decides.
 
 ## Setup (start small)
 

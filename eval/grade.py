@@ -103,7 +103,7 @@ def main():
         return out
     rl = rule_lines(voice)
     vfix = N(v['v3']) not in N(' '.join(l for l in voice.splitlines() if l not in rl)) and all(l in rl for l in voice.splitlines() if v['old_product'] in l)
-    upstream = bool(re.search(r'(assistant|prompt|ai tools?), first', allout)) or bool(re.search(r'(voice|prompt|writing assistant|ai instructions|ai tools?)[^.]{0,160}(upstream|source|regenerat|fix(ed)? (these |it |them )?first|keep (writing|producing|putting)|reintroduc|bring (it|them) back|every future|future (copy|drafts)|tomorrow)', allout))
+    upstream = bool(re.search(r'(assistant|prompt|ai tools?)[^\n]{0,20}\bfirst\b', allout)) or bool(re.search(r'(voice|prompt|writing assistant|ai instructions|ai tools?)[^.]{0,160}(upstream|source|regenerat|fix(ed)? (these |it |them )?first|keep (writing|producing|putting)|reintroduc|bring (it|them) back|every future|future (copy|drafts)|tomorrow)', allout))
     row('P9 AI voice prompt fixed + called upstream', vfix and upstream, f'fixed: {vfix}, called out as the source: {upstream}', half=vfix)
     sent_unchanged = not changed('sent/' + sent_rel)
     corr = bool(re.search(r'correct|follow[- ]?up|update (to|for)? ?' + re.escape(N(v['reporter']).split()[0]), allout)) and N(v['reporter']).split()[0] in allout

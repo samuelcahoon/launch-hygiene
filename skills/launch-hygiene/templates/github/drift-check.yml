@@ -1,0 +1,24 @@
+# Launch hygiene drift check, run by GitHub on every pull request.
+# Copy to .github/workflows/drift-check.yml in your canon repo.
+# Change the folders after canon.json to wherever your copy lives.
+# A retired line in the copy fails the check, and the report shows on the pull request.
+name: Drift check
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  drift-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check for stale launch copy
+        run: python3 drift_check.py canon.json copy prompts knowledge --out drift-report.md

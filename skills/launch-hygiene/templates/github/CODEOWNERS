@@ -1,0 +1,9 @@
+# Who has to approve a change. Copy to .github/CODEOWNERS in your canon repo.
+# GitHub asks these people to review any pull request that touches these files.
+# Use the GitHub usernames of the people in your canon's "decides".
+
+canon.json                  @your-ceo @you
+knowledge/positioning.md    @your-ceo
+knowledge/objections.md     @you @your-head-of-sales
+prompts/                    @you
+copy/                       @you

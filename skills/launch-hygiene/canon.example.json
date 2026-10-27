@@ -1,0 +1,42 @@
+{
+  "_about": "Your launch canon. Approved lines appear word for word wherever they're used. Retired phrases appear nowhere current. Update this the moment a decision is made, bump the version, then run the drift check. Anything in [brackets] is a placeholder the check ignores.",
+  "version": "1",
+  "updated": "[YYYY-MM-DD]",
+  "decides": {
+    "tagline": "[name, usually the CEO]",
+    "claims": "[name who signs off on numbers, customers and security claims]",
+    "everything else": "[you]"
+  },
+  "approved": {
+    "tagline": "[Your tagline, word for word]",
+    "one_liner": "[What you do, in one sentence]",
+    "boilerplate": "[Your About paragraph, word for word]",
+    "product_name": "[Exact product name and casing]",
+    "objection_answer": "[Your answer to the question you hear most]",
+    "cta": "[Your main call to action]",
+    "launch_date": "[Weekday, Month Day]",
+    "embargo": "[When the embargo lifts, with time zone]",
+    "press_contact": "[press@ address]"
+  },
+  "claims": [
+    {"say": "[An exact claim: a number, a ranking, a customer name, a security certification]", "status": "approved", "source": "[link to the proof]", "approved_by": "[name]", "review_by": "[YYYY-MM-DD]"}
+  ],
+  "surfaces": [
+    {"where": "[Folder with site copy]", "owner": "me"},
+    {"where": "[https://yoursite.com, the live page]", "owner": "me"},
+    {"where": "[Notion: messaging doc]", "owner": "me"},
+    {"where": "[Notion: founder or exec page]", "owner": "[their name]"},
+    {"where": "[Sales deck]", "owner": "[their name]"},
+    {"where": "[AI tools that write for you: Claude project, skill, custom GPT, saved prompts]", "owner": "me"},
+    {"where": "[Slack and email drafts]", "owner": "me"}
+  ],
+  "retired": [
+    {"find": "[Old tagline]", "use": "tagline", "why": "Changed [date] by [who]"},
+    {"find": "[Old product name]", "use": "product_name", "why": "Renamed [date] by [who]"},
+    {"find": "[Old date, one row per form: Feb 9, February 9]", "use": "launch_date", "why": "Moved [date]"},
+    {"find": "[A word your team banned]", "use": "[What to say instead]", "why": "Word list"},
+    {"find": "[info@yourco.com]", "use": "press_contact", "why": "Example: press now goes to press@. The general contact line stays.", "ok_if": ["General questions"]},
+    {"find": "[OldName]", "use": "product_name", "why": "Example for a rename that only changes capital letters", "match_case": true}
+  ],
+  "ok_close": []
+}
